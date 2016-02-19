@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,9 +103,20 @@ public class PathQuerierTests {
 		condition.setOperator(Operator.DATE_LT);
 		Date date = Date.from(Instant.now().minus(Period.ofDays(26*365)));
 		condition.setValue(date.getTime()+"");
-		List<User> results = userRepository.findAll(pathQuerier.query(condition ));
+		List<User> results = userRepository.findAll(pathQuerier.query(condition));
 		Assert.assertEquals(1, results.size());
 
+	}
+	
+	@Test
+	public void  testPageable() {
+		Condition condition0 = new Condition();
+		condition0.setNamePath("age");
+		condition0.setOperator(Operator.LT);
+		condition0.setValue("50");
+		Page<User> results =userRepository.findAll(pathQuerier.query(condition0) , new PageRequest(1,2));
+		Assert.assertEquals(3, results.getTotalElements());
+		Assert.assertEquals(1, results.getNumber());
 	}
 	
 }

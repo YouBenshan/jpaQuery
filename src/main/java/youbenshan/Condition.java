@@ -1,6 +1,6 @@
 package youbenshan;
 
- public class  Condition{
+ public class Condition{
 	public String getNamePath() {
 		return namePath;
 	}
