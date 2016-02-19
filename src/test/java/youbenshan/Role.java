@@ -1,4 +1,4 @@
-package youyu;
+package youbenshan;
 
 import javax.persistence.Entity;
 

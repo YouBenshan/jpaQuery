@@ -1,4 +1,4 @@
-package youyu;
+package youbenshan;
 
  public class  Condition{
 	public String getNamePath() {
