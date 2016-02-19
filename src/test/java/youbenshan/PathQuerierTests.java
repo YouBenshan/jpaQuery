@@ -119,4 +119,10 @@ public class PathQuerierTests {
 		Assert.assertEquals(1, results.getNumber());
 	}
 	
+	@Test
+	public void  testNoneCondition() {
+		Page<User> results =userRepository.findAll(pathQuerier.query(new Condition[]{}) , new PageRequest(1,2));
+		Assert.assertEquals(3, results.getTotalElements());
+		Assert.assertEquals(1, results.getNumber());
+	}
 }
