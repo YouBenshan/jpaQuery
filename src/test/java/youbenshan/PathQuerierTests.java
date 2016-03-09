@@ -84,6 +84,17 @@ public class PathQuerierTests {
 	}
 	
 	@Test
+	public void  testIn() {
+
+		Condition condition = new Condition();
+		condition.setNamePath("name");
+		condition.setOperator(Operator.IN);
+		condition.setValue("user0, user1");
+		List<User> results = userRepository.findAll(pathQuerier.query(condition ));
+		Assert.assertEquals(2, results.size());
+	}
+	
+	@Test
 	public void  testLike() {
 
 		Condition condition = new Condition();
