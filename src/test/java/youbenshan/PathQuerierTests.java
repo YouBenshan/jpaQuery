@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @ContextConfiguration(classes = SimpleConfiguration.class)
 public class PathQuerierTests {
-	@Autowired private PathQuerier pathQuerier;
 	@Autowired private UserRepository userRepository;
 	@Autowired private RoleRepository roleRepository;
 
@@ -68,7 +67,7 @@ public class PathQuerierTests {
 		condition0.setNamePath("age");
 		condition0.setOperator(Operator.LT);
 		condition0.setValue("50");
-		List<User> results =userRepository.findAll(pathQuerier.query(condition0));
+		List<User> results =userRepository.findAll(PathQuerier.query(condition0));
 		Assert.assertEquals(3, results.size());
 
 		Condition condition1 = new Condition();
@@ -76,10 +75,10 @@ public class PathQuerierTests {
 		condition1.setOperator(Operator.GT);
 		condition1.setValue("2.0");
 		
-		results = userRepository.findAll(pathQuerier.query( condition1));
+		results = userRepository.findAll(PathQuerier.query( condition1));
 		Assert.assertEquals(1, results.size());
 		
-		results = userRepository.findAll(pathQuerier.query( condition0 ,condition1));
+		results = userRepository.findAll(PathQuerier.query( condition0 ,condition1));
 		Assert.assertEquals(1, results.size());
 	}
 	
@@ -90,7 +89,7 @@ public class PathQuerierTests {
 		condition.setNamePath("name");
 		condition.setOperator(Operator.IN);
 		condition.setValue("user0, user1");
-		List<User> results = userRepository.findAll(pathQuerier.query(condition ));
+		List<User> results = userRepository.findAll(PathQuerier.query(condition ));
 		Assert.assertEquals(2, results.size());
 	}
 	
@@ -101,7 +100,7 @@ public class PathQuerierTests {
 		condition.setNamePath("name");
 		condition.setOperator(Operator.LIKE);
 		condition.setValue("%2");
-		List<User> results = userRepository.findAll(pathQuerier.query(condition ));
+		List<User> results = userRepository.findAll(PathQuerier.query(condition ));
 		Assert.assertEquals(1, results.size());
 	}
 	
@@ -113,7 +112,7 @@ public class PathQuerierTests {
 		condition.setOperator(Operator.DATE_LT);
 		Date date = Date.from(Instant.now().minus(Period.ofDays(26*365)));
 		condition.setValue(date.getTime()+"");
-		List<User> results = userRepository.findAll(pathQuerier.query(condition));
+		List<User> results = userRepository.findAll(PathQuerier.query(condition));
 		Assert.assertEquals(1, results.size());
 
 	}
@@ -124,14 +123,14 @@ public class PathQuerierTests {
 		condition0.setNamePath("age");
 		condition0.setOperator(Operator.LT);
 		condition0.setValue("50");
-		Page<User> results =userRepository.findAll(pathQuerier.query(condition0) , new PageRequest(1,2));
+		Page<User> results =userRepository.findAll(PathQuerier.query(condition0) , new PageRequest(1,2));
 		Assert.assertEquals(3, results.getTotalElements());
 		Assert.assertEquals(1, results.getNumber());
 	}
 	
 	@Test
 	public void  testNoneCondition() {
-		Page<User> results =userRepository.findAll(pathQuerier.query(new Condition[]{}) , new PageRequest(1,2));
+		Page<User> results =userRepository.findAll(PathQuerier.query(new Condition[]{}) , new PageRequest(1,2));
 		Assert.assertEquals(3, results.getTotalElements());
 		Assert.assertEquals(1, results.getNumber());
 	}
