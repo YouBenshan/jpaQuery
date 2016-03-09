@@ -35,12 +35,12 @@ public class PathQuerierTests {
 
 		Role role1 = new Role();
 		role1.setName("role1");
-		role1.setPriority(2.1f);
+		role1.setPriority(12.1f);
 		role1 = roleRepository.save(role1);
 
 		User user0 = new User();
 		user0.setName("user0");
-		user0.setAge(20);
+		user0.setAge(120);
 		user0.setBirthday(Date.from(Instant.now().minus(Period.ofDays(20 * 365))));
 		user0.setRole(role0);
 		userRepository.save(user0);
@@ -61,25 +61,36 @@ public class PathQuerierTests {
 	}
 
 	@Test
-	public void testFind() {
+	public void testComponse() {
 
 		Condition condition0 = new Condition();
 		condition0.setNamePath("age");
 		condition0.setOperator(Operator.LT);
 		condition0.setValue("50");
-		List<User> results = userRepository.findAll(PathQuerier.query(condition0));
-		Assert.assertEquals(3, results.size());
 
 		Condition condition1 = new Condition();
 		condition1.setNamePath("role.priority");
 		condition1.setOperator(Operator.GT);
 		condition1.setValue("2.0");
 
-		results = userRepository.findAll(PathQuerier.query(condition1));
-		Assert.assertEquals(1, results.size());
+		Assert.assertEquals(1, userRepository.findAll(PathQuerier.query(condition0, condition1)).size());
+	}
+	
+	@Test
+	public void testNumber() {
 
-		results = userRepository.findAll(PathQuerier.query(condition0, condition1));
-		Assert.assertEquals(1, results.size());
+		Condition condition0 = new Condition();
+		condition0.setNamePath("age");
+		condition0.setOperator(Operator.LT);
+		condition0.setValue("50");
+		Assert.assertEquals(2, userRepository.findAll(PathQuerier.query(condition0)).size());
+
+		Condition condition1 = new Condition();
+		condition1.setNamePath("priority");
+		condition1.setOperator(Operator.GT);
+		condition1.setValue("2.0");
+
+		Assert.assertEquals(1, roleRepository.findAll(PathQuerier.query(condition1)).size());
 	}
 
 	@Test
@@ -112,6 +123,7 @@ public class PathQuerierTests {
 		condition.setOperator(Operator.DATE_LT);
 		Date date = Date.from(Instant.now().minus(Period.ofDays(26 * 365)));
 		condition.setValue(date.getTime() + "");
+//		condition.setValue(date.toString());
 		List<User> results = userRepository.findAll(PathQuerier.query(condition));
 		Assert.assertEquals(1, results.size());
 
@@ -124,7 +136,7 @@ public class PathQuerierTests {
 		condition0.setOperator(Operator.LT);
 		condition0.setValue("50");
 		Page<User> results = userRepository.findAll(PathQuerier.query(condition0), new PageRequest(1, 2));
-		Assert.assertEquals(3, results.getTotalElements());
+		Assert.assertEquals(2, results.getTotalElements());
 		Assert.assertEquals(1, results.getNumber());
 	}
 
