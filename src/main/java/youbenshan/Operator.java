@@ -44,7 +44,7 @@ public enum Operator {
 			return criteriaBuilder.lessThanOrEqualTo(path, value);
 		}
 	},
-	IN {
+	STRING_IN {
 		@Override
 		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
 				CriteriaBuilder criteriaBuilder) {
@@ -58,10 +58,7 @@ public enum Operator {
 			return criteriaBuilder.like(path.as(String.class), (String) value);
 		}
 	};
-	protected <T extends Comparable<? super T>> Date parseDate(T value) {
-		return new Date(Long.valueOf((String) value));
-	}
-
+	
 	public abstract <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
 			CriteriaBuilder criteriaBuilder);
 }

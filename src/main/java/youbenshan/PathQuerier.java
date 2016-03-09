@@ -29,6 +29,8 @@ public class PathQuerier {
 		if (javaType.isEnum()){
 			Class<E> enumClass=(Class<E>)javaType;
 			result= Enum.valueOf(enumClass, value);
+		}else if(javaType.equals(boolean.class) || javaType.equals(Boolean.class) ){
+			result = Boolean.valueOf(value);
 		}else if(javaType.equals(Instant.class)){
 			result = Instant.parse(value);
 		}else{

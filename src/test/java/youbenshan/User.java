@@ -71,6 +71,16 @@ public class User extends AbstractPersistable<Long> {
 	private int age;
 	@ManyToOne
 	private Role role;
+	
+	private boolean good;
+
+	public boolean isGood() {
+		return good;
+	}
+
+	public void setGood(boolean good) {
+		this.good = good;
+	}
 
 	private Instant birthday;
 

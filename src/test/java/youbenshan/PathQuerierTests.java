@@ -45,6 +45,7 @@ public class PathQuerierTests {
 		user0.setBirthday(Instant.now().minus(Period.ofDays(20 * 365)));
 		user0.setRole(role0);
 		user0.setSex(Sex.male);
+		user0.setGood(true);
 		userRepository.save(user0);
 
 		User user1 = new User();
@@ -53,6 +54,7 @@ public class PathQuerierTests {
 		user1.setBirthday(Instant.now().minus(Period.ofDays(25 * 365)));
 		user1.setRole(role0);
 		user1.setSex(Sex.male);
+		user1.setGood(true);
 		userRepository.save(user1);
 
 		User user2 = new User();
@@ -98,6 +100,17 @@ public class PathQuerierTests {
 	}
 	
 	@Test
+	public void testBoolean() {
+
+		Condition condition = new Condition();
+		condition.setNamePath("good");
+		condition.setOperator(Operator.EQ);
+		condition.setValue("True");
+		List<User> results = userRepository.findAll(PathQuerier.query(condition));
+		Assert.assertEquals(2, results.size());
+	}
+	
+	@Test
 	public void testEnum() {
 
 		Condition condition = new Condition();
@@ -113,7 +126,7 @@ public class PathQuerierTests {
 
 		Condition condition = new Condition();
 		condition.setNamePath("name");
-		condition.setOperator(Operator.IN);
+		condition.setOperator(Operator.STRING_IN);
 		condition.setValue("user0, user1");
 		List<User> results = userRepository.findAll(PathQuerier.query(condition));
 		Assert.assertEquals(2, results.size());
