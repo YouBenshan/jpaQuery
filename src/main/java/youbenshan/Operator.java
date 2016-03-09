@@ -72,7 +72,7 @@ public enum Operator {
 	IN {
 		@Override
 		public Predicate predicate(Path<?> path, String value, CriteriaBuilder criteriaBuilder) {
-			return path.in(Arrays.stream(value.split(",")).map(x->x.trim()).collect(Collectors.toSet()));
+			return path.in(Arrays.stream(value.split(",")).map(x -> x.trim()).collect(Collectors.toSet()));
 		}
 	},
 	LIKE {

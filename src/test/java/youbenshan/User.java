@@ -30,7 +30,8 @@ public class User extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -2952735933715107252L;
 
-	@Column(unique = true) private String name;
+	@Column(unique = true)
+	private String name;
 
 	public String getName() {
 		return name;
@@ -48,7 +49,6 @@ public class User extends AbstractPersistable<Long> {
 		this.age = age;
 	}
 
-	
 	public Role getRole() {
 		return role;
 	}
@@ -60,7 +60,7 @@ public class User extends AbstractPersistable<Long> {
 	private int age;
 	@ManyToOne
 	private Role role;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date birthday;
 
@@ -71,5 +71,5 @@ public class User extends AbstractPersistable<Long> {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
+
 }

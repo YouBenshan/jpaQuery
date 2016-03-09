@@ -1,25 +1,32 @@
 package youbenshan;
 
- public class Condition{
-	public String getNamePath() {
-		return namePath;
-	}
-	public void setNamePath(String namePath) {
-		this.namePath = namePath;
-	}
-	public Operator getOperator() {
-		return operator;
-	}
-	public void setOperator(Operator operator) {
-		this.operator = operator;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
+public class Condition {
 	private String namePath;
 	private Operator operator;
 	private String value;
+
+	public String getNamePath() {
+		return namePath;
+	}
+
+	public void setNamePath(String namePath) {
+		this.namePath = namePath;
+	}
+
+	public Operator getOperator() {
+		return operator;
+	}
+
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 }
