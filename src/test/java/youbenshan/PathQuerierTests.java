@@ -2,7 +2,6 @@ package youbenshan;
 
 import java.time.Instant;
 import java.time.Period;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -41,21 +40,21 @@ public class PathQuerierTests {
 		User user0 = new User();
 		user0.setName("user0");
 		user0.setAge(120);
-		user0.setBirthday(Date.from(Instant.now().minus(Period.ofDays(20 * 365))));
+		user0.setBirthday(Instant.now().minus(Period.ofDays(20 * 365)));
 		user0.setRole(role0);
 		userRepository.save(user0);
 
 		User user1 = new User();
 		user1.setName("user1");
 		user1.setAge(25);
-		user1.setBirthday(Date.from(Instant.now().minus(Period.ofDays(25 * 365))));
+		user1.setBirthday(Instant.now().minus(Period.ofDays(25 * 365)));
 		user1.setRole(role0);
 		userRepository.save(user1);
 
 		User user2 = new User();
 		user2.setName("user2");
 		user2.setAge(30);
-		user2.setBirthday(Date.from(Instant.now().minus(Period.ofDays(30 * 365))));
+		user2.setBirthday(Instant.now().minus(Period.ofDays(30 * 365)));
 		user2.setRole(role1);
 		userRepository.save(user2);
 	}
@@ -75,7 +74,7 @@ public class PathQuerierTests {
 
 		Assert.assertEquals(1, userRepository.findAll(PathQuerier.query(condition0, condition1)).size());
 	}
-	
+
 	@Test
 	public void testNumber() {
 
@@ -120,10 +119,10 @@ public class PathQuerierTests {
 
 		Condition condition = new Condition();
 		condition.setNamePath("birthday");
-		condition.setOperator(Operator.DATE_LT);
-		Date date = Date.from(Instant.now().minus(Period.ofDays(26 * 365)));
-		condition.setValue(date.getTime() + "");
-//		condition.setValue(date.toString());
+		condition.setOperator(Operator.LT);
+		// Date date = Date.from(Instant.now().minus(Period.ofDays(26 * 365)));
+		// condition.setValue(date.getTime() + "");
+		condition.setValue(Instant.now().minus(Period.ofDays(26 * 365)).toString());
 		List<User> results = userRepository.findAll(PathQuerier.query(condition));
 		Assert.assertEquals(1, results.size());
 

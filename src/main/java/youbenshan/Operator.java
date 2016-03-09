@@ -44,41 +44,6 @@ public enum Operator {
 			return criteriaBuilder.lessThanOrEqualTo(path, value);
 		}
 	},
-	DATE_EQ {
-		@Override
-		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
-				CriteriaBuilder criteriaBuilder) {
-			return criteriaBuilder.equal(path.as(Date.class), parseDate(value));
-		}
-	},
-	DATE_GT {
-		@Override
-		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
-				CriteriaBuilder criteriaBuilder) {
-			return criteriaBuilder.greaterThan(path.as(Date.class), parseDate(value));
-		}
-	},
-	DATE_LT {
-		@Override
-		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
-				CriteriaBuilder criteriaBuilder) {
-			return criteriaBuilder.lessThan(path.as(Date.class), parseDate(value));
-		}
-	},
-	DATE_GTE {
-		@Override
-		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
-				CriteriaBuilder criteriaBuilder) {
-			return criteriaBuilder.greaterThanOrEqualTo(path.as(Date.class), parseDate(value));
-		}
-	},
-	DATE_LTE {
-		@Override
-		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,
-				CriteriaBuilder criteriaBuilder) {
-			return criteriaBuilder.lessThanOrEqualTo(path.as(Date.class), parseDate(value));
-		}
-	},
 	IN {
 		@Override
 		public <T extends Comparable<? super T>> Predicate predicate(Path<T> path, T value,

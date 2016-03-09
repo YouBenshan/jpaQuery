@@ -15,13 +15,11 @@
  */
 package youbenshan;
 
-import java.util.Date;
+import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -61,14 +59,13 @@ public class User extends AbstractPersistable<Long> {
 	@ManyToOne
 	private Role role;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date birthday;
+	private Instant birthday;
 
-	public Date getBirthday() {
+	public Instant getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(Instant birthday) {
 		this.birthday = birthday;
 	}
 
