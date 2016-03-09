@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import youbenshan.User.Sex;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration(classes = SimpleConfiguration.class)
@@ -42,6 +44,7 @@ public class PathQuerierTests {
 		user0.setAge(120);
 		user0.setBirthday(Instant.now().minus(Period.ofDays(20 * 365)));
 		user0.setRole(role0);
+		user0.setSex(Sex.male);
 		userRepository.save(user0);
 
 		User user1 = new User();
@@ -49,6 +52,7 @@ public class PathQuerierTests {
 		user1.setAge(25);
 		user1.setBirthday(Instant.now().minus(Period.ofDays(25 * 365)));
 		user1.setRole(role0);
+		user1.setSex(Sex.male);
 		userRepository.save(user1);
 
 		User user2 = new User();
@@ -56,6 +60,7 @@ public class PathQuerierTests {
 		user2.setAge(30);
 		user2.setBirthday(Instant.now().minus(Period.ofDays(30 * 365)));
 		user2.setRole(role1);
+		user2.setSex(Sex.female);
 		userRepository.save(user2);
 	}
 
@@ -91,6 +96,17 @@ public class PathQuerierTests {
 
 		Assert.assertEquals(1, roleRepository.findAll(PathQuerier.query(condition1)).size());
 	}
+	
+	@Test
+	public void testEnum() {
+
+		Condition condition = new Condition();
+		condition.setNamePath("sex");
+		condition.setOperator(Operator.EQ);
+		condition.setValue("male");
+		List<User> results = userRepository.findAll(PathQuerier.query(condition));
+		Assert.assertEquals(2, results.size());
+	}
 
 	@Test
 	public void testIn() {
@@ -115,8 +131,7 @@ public class PathQuerierTests {
 	}
 
 	@Test
-	public void testDate() {
-
+	public void testInstant() {
 		Condition condition = new Condition();
 		condition.setNamePath("birthday");
 		condition.setOperator(Operator.LT);

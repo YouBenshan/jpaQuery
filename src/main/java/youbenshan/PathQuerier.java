@@ -1,7 +1,6 @@
 package youbenshan;
 
 import java.time.Instant;
-import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,23 +16,25 @@ public class PathQuerier {
 				.orElseGet(cb::conjunction);
 	}
 	
-	private static <T extends Comparable<? super T>> Predicate predicate(CriteriaBuilder builder, final Root<?> root,
+	private static <T extends Comparable<? super T>, E extends Enum<E>> Predicate predicate(CriteriaBuilder builder, final Root<?> root,
 			Condition condition) {
 		
 		Path<T> path = getPath(root, condition.getNamePath());
-		T value = getValue(condition.getValue());
-		return condition.getOperator().predicate(path, value, builder);
+		return condition.getOperator().predicate(path, getValue(path.getJavaType(),condition.getValue() ), builder);
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	private static <T extends Comparable<? super T>> T getValue(String value) {
-		Object result = null;
-		try {
+	private static <T extends Comparable<? super T>, E extends Enum<E>> T getValue(Class<T> javaType, String value){
+		Object result =null;
+		if (javaType.isEnum()){
+			Class<E> enumClass=(Class<E>)javaType;
+			result= Enum.valueOf(enumClass, value);
+		}else if(javaType.equals(Instant.class)){
 			result = Instant.parse(value);
-		} catch (DateTimeParseException e) {
-			result = value;
+		}else{
+			result=value;
 		}
-		return (T) result;
+		return (T)result;
 	}
 
 	@SuppressWarnings("unchecked")

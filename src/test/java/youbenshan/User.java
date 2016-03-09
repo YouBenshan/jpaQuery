@@ -19,6 +19,8 @@ import java.time.Instant;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -30,6 +32,17 @@ public class User extends AbstractPersistable<Long> {
 
 	@Column(unique = true)
 	private String name;
+	
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+
+	@Enumerated(EnumType.STRING)
+	private Sex sex;
 
 	public String getName() {
 		return name;
@@ -69,4 +82,8 @@ public class User extends AbstractPersistable<Long> {
 		this.birthday = birthday;
 	}
 
+	
+	public static enum Sex{
+		male, female
+	}
 }
